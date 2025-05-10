@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合作 - Crazyrocket</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-weight: 300;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 22px;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .logo-text {
+            margin-right: 10px;
+        }
+        
+        .logo-subtext {
+            font-size: 14px;
+            color: #666;
+            font-weight: 300;
+            margin-left: 10px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        .center-nav {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 0 auto;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .nav-btn {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background-color: #f5f5f5;
+            border-radius: 20px;
+        }
+        
+        .nav-btn.primary {
+            background-color: #1a73e8;
+            color: white;
+            font-weight: 500;
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+        
+        .nav-btn.primary:hover {
+            background-color: #1557b0;
+        }
+        
+        /* 页面标题 */
+        .page-title {
+            font-size: 36px;
+            text-align: center;
+            margin: 50px 0 30px;
+            font-weight: bold;
+        }
+        
+        /* 合作类型卡片 */
+        .cooperation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .coop-card {
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .coop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        
+        .coop-content {
+            padding: 25px;
+        }
+        
+        .coop-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .coop-description {
+            color: #666;
+            margin-bottom: 20px;
+            min-height: 80px;
+            font-weight: 300;
+        }
+        
+        .coop-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tag {
+            background-color: #f5f5f5;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #1a73e8;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+        
+        .cta-button:hover {
+            background-color: #1557b0;
+        }
+        
+        /* 联系区域 */
+        .contact-section {
+            background-color: #f9f9f9;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 50px 0;
+            text-align: center;
+        }
+        
+        .contact-section h2 {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .contact-section p {
+            margin-bottom: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .cooperation-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .center-nav {
+                position: static;
+                transform: none;
+                margin: 10px 0;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 6px 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <div>
+                    <span class="logo-text">Crazyrocket</span>
+                    <span class="logo-subtext">Z世代的开发者——PromptSpace&PromptForum</span>
+                </div>
+            </a>
+            <div class="center-nav">
+                <a href="index.html#positions" class="nav-btn">职位</a>
+                <a href="#" class="nav-btn">合作？</a>
+                <a href="index.html#products" class="nav-btn">我们的产品</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="about_副本.html" class="nav-btn primary">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 页面内容 -->
+    <div class="container">
+        <h1 class="page-title">合作方式</h1>
+        
+        <div class="cooperation-grid">
+            <!-- 业务合作卡片 -->
+            <div class="coop-card">
+                <div class="coop-content">
+                    <h2 class="coop-title">业务合作</h2>
+                    <p class="coop-description">与我们的产品和服务建立业务合作关系，共同开拓市场，为用户提供更优质的AI解决方案。</p>
+                    <div class="coop-tags">
+                        <span class="tag">产品集成</span>
+                        <span class="tag">联合营销</span>
+                        <span class="tag">资源共享</span>
+                    </div>
+                    <a href="mailto:1765591779@qq.com?subject=业务合作咨询&body=您好，我们对与贵公司的业务合作感兴趣，希望了解更多详情。" class="cta-button">立即咨询</a>
+                </div>
+            </div>
+            
+            <!-- 投资合作卡片 -->
+            <div class="coop-card">
+                <div class="coop-content">
+                    <h2 class="coop-title">投资合作</h2>
+                    <p class="coop-description">我们欢迎有远见的投资者加入我们，共同推动AI领域的创新与发展，创造更大的商业价值。</p>
+                    <div class="coop-tags">
+                        <span class="tag">天使投资</span>
+                        <span class="tag">战略投资</span>
+                        <span class="tag">风险投资</span>
+                    </div>
+                    <a href="mailto:1765591779@qq.com?subject=投资合作咨询&body=您好，我们对贵公司感兴趣，希望了解更多关于投资合作的详情。" class="cta-button">了解详情</a>
+                </div>
+            </div>
+            
+            <!-- 分销合作卡片 -->
+            <div class="coop-card">
+                <div class="coop-content">
+                    <h2 class="coop-title">分销合作</h2>
+                    <p class="coop-description">成为我们的分销合作伙伴，帮助销售PromptSpace产品，获取20%的销售提成，共同成长。</p>
+                    <div class="coop-tags">
+                        <span class="tag">一级分销</span>
+                        <span class="tag">高额提成</span>
+                        <span class="tag">灵活合作</span>
+                    </div>
+                    <a href="mailto:1765591779@qq.com?subject=分销合作咨询&body=您好，我对成为贵公司的分销合作伙伴感兴趣，希望了解更多详情。" class="cta-button">成为分销商</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 联系我们区域 -->
+        <div class="contact-section">
+            <h2>寻找更多合作方式？</h2>
+            <p>如果您有其他合作想法或建议，我们非常欢迎与您沟通交流。无论是技术合作、内容合作还是其他创新合作模式，都可以通过以下方式联系我们。</p>
+            <a href="about_副本.html" class="cta-button">联系我们</a>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazyrocket - Z世代的开发者</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-weight: 300;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 22px;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .logo-text {
+            margin-right: 10px;
+        }
+        
+        .logo-subtext {
+            font-size: 14px;
+            color: #666;
+            font-weight: 300;
+            margin-left: 10px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        .center-nav {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 0 auto;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .nav-btn {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background-color: #f5f5f5;
+            border-radius: 20px;
+        }
+        
+        .nav-btn.primary {
+            background-color: #1a73e8;
+            color: white;
+            font-weight: 500;
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+        
+        .nav-btn.primary:hover {
+            background-color: #1557b0;
+        }
+        
+        /* 主体区域样式 */
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero h1 .wave {
+            margin-right: 15px;
+            font-size: 52px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            min-height: 60px;
+            font-weight: 300;
+        }
+        
+        /* 产品展示区域 */
+        .products-section {
+            padding: 40px 0;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .product-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .product-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+        }
+        
+        .product-details {
+            flex: 1;
+        }
+        
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .product-subtitle {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 300;
+        }
+        
+        .product-description {
+            font-size: 16px;
+            color: #666;
+            margin: 15px 0;
+            font-weight: 300;
+        }
+        
+        .app-store-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #1a73e8;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .app-store-btn:hover {
+            background-color: #1557b0;
+        }
+        
+        .app-store-btn i {
+            margin-right: 8px;
+        }
+        
+        /* 卡片区域样式 */
+        .card-section {
+            padding: 40px 0 80px;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .card {
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-title {
+            font-size: 26px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+        
+        .card-description {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 24px;
+            min-height: 80px;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+        
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        
+        .tag {
+            background-color: #f5f5f5;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .card-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .founder {
+            display: flex;
+            align-items: center;
+        }
+        
+        .founder img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .founder-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .action-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .action-link {
+            text-decoration: none;
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .action-link:hover {
+            color: #1a73e8;
+        }
+        
+        .action-link:after {
+            content: none;
+        }
+        
+        .action-link svg {
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-subtext {
+                display: none;
+            }
+            
+            .nav-buttons, .center-nav {
+                gap: 5px;
+            }
+            
+            .center-nav {
+                position: static;
+                transform: none;
+                margin: 0;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 6px 10px;
+                font-size: 14px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero h1 .wave {
+                font-size: 40px;
+            }
+            
+            .product-card {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .product-logo {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        
+        /* 打字机效果的光标 */
+        .typewriter::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow: auto;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            position: relative;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .modal-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 25px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 5px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .modal-close:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .modal-footer .cta-button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <div>
+                    <span class="logo-text">Crazyrocket</span>
+                    <span class="logo-subtext">Z世代的开发者——PromptSpace&PromptForum</span>
+                </div>
+            </a>
+            <div class="center-nav">
+                <a href="#positions" class="nav-btn">职位</a>
+                <a href="cooperation.html" class="nav-btn">合作？</a>
+                <a href="#products" class="nav-btn">我们的产品</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="about_副本.html" class="nav-btn primary">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主体顶部区域 -->
+    <section class="hero">
+        <div class="container">
+            <h1><span class="wave">🌟</span> Change world for the better</h1>
+            <p id="typewriter" class="typewriter"></p>
+        </div>
+    </section>
+    
+    <!-- 产品展示区域 -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2 class="section-title">我们的产品</h2>
+            <div class="product-card">
+                <img src="assets/@LOGO.png" alt="PromptSpace Logo" class="product-logo">
+                <div class="product-details">
+                    <h3 class="product-title">提示词空间-提示词库&Agent案例社区</h3>
+                    <p class="product-subtitle">专为 iPhone 设计</p>
+                    <p class="product-subtitle">免费 · 提供 App 内购买项目</p>
+                    <p class="product-description">为了帮你打破AI信息差，我们做了一个App</p>
+                    <a href="https://apps.apple.com/cn/app/%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%A9%BA%E9%97%B4-%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%BA%93-agent%E6%A1%88%E4%BE%8B%E7%A4%BE%E5%8C%BA/id6743653417" class="app-store-btn" target="_blank">
+                        <i>🍎</i> 在 App Store 查看
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 即将推出产品 -->
+            <div class="product-card" style="margin-top: 30px; background-color: #f7f9fc;">
+                <div style="width: 120px; height: 120px; display: flex; justify-content: center; align-items: center; background-color: #eaeef2; border-radius: 15px; font-size: 60px;">
+                    ❓
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">即将推出</h3>
+                    <p class="product-subtitle">敬请期待</p>
+                    <p class="product-description">造一个人工智能时代的知乎...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 职位区域 -->
+    <section class="card-section" id="positions" style="padding-top: 80px;">
+        <div class="container">
+            <h2 class="section-title">🦄 寻找志同道合的你</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">分销</div>
+                        <div class="card-description">一级分销，帮助Crazyrocket的产品PromptSpace进行销售，并获得其中提成的20%。</div>
+                        <div class="card-tags">
+                            <span class="tag">可远程</span>
+                            <span class="tag">兼职/全职</span>
+                        </div>
+                        <div class="card-links">
+                            <div class="founder">
+                                <img src="assets/PRCrecluse.jpg" alt="PRC隐士">
+                                <span class="founder-name">PRC隐士</span>
+                            </div>
+                            <div class="action-links">
+                                <a href="#" class="action-link job-description" data-job="分销">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                                    </svg>
+                                    职位描述
+                                </a>
+                                <a href="mailto:1765591779@qq.com?subject=应聘分销职位&body=您好，我对贵公司的分销职位很感兴趣，希望能加入贵公司。" class="action-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    加入
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 运营卡片 -->
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">运营</div>
+                        <div class="card-description">主要负责小红书或公众号平台的运营，对文章的内容和数据有要求，期待有审美且有数据分析能力的你。</div>
+                        <div class="card-tags">
+                            <span class="tag">杭州</span>
+                            <span class="tag">兼职/全职</span>
+                        </div>
+                        <div class="card-links">
+                            <div class="founder">
+                                <img src="assets/PRCrecluse.jpg" alt="PRC隐士">
+                                <span class="founder-name">PRC隐士</span>
+                            </div>
+                            <div class="action-links">
+                                <a href="#" class="action-link job-description" data-job="运营">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                                    </svg>
+                                    职位描述
+                                </a>
+                                <a href="mailto:1765591779@qq.com?subject=应聘运营职位&body=您好，我对贵公司的运营职位很感兴趣，希望能加入贵公司。" class="action-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    加入
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 开发卡片 -->
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">开发</div>
+                        <div class="card-description">负责安卓端开发，可以没有开发基础，但必须向我们展示出你的执行力和热情，需要你同期没有其他繁忙事务。</div>
+                        <div class="card-tags">
+                            <span class="tag">可远程</span>
+                            <span class="tag">兼职/全职</span>
+                        </div>
+                        <div class="card-links">
+                            <div class="founder">
+                                <img src="assets/PRCrecluse.jpg" alt="PRC隐士">
+                                <span class="founder-name">PRC隐士</span>
+                            </div>
+                            <div class="action-links">
+                                <a href="#" class="action-link job-description" data-job="开发">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                                    </svg>
+                                    职位描述
+                                </a>
+                                <a href="mailto:1765591779@qq.com?subject=应聘开发职位&body=您好，我对贵公司的开发职位很感兴趣，希望能加入贵公司。" class="action-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    加入
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 合作区域 -->
+    <section class="products-section" id="cooperation" style="margin-top: 40px;">
+        <div class="container">
+            <h2 class="section-title">合作方式</h2>
+            <div class="card-grid">
+                <!-- 业务合作卡片 -->
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">业务合作</div>
+                        <div class="card-description">与我们的产品和服务建立业务合作关系，共同开拓市场，为用户提供更优质的AI解决方案。</div>
+                        <div class="card-tags">
+                            <span class="tag">产品集成</span>
+                            <span class="tag">联合营销</span>
+                        </div>
+                        <div class="card-links">
+                            <div class="founder">
+                                <img src="assets/PRCrecluse.jpg" alt="PRC隐士">
+                                <span class="founder-name">PRC隐士</span>
+                            </div>
+                            <div class="action-links">
+                                <a href="cooperation.html" class="action-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                                    </svg>
+                                    了解详情
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 分销合作卡片 -->
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">分销合作</div>
+                        <div class="card-description">成为我们的分销合作伙伴，帮助销售PromptSpace产品，获取20%的销售提成，共同成长。</div>
+                        <div class="card-tags">
+                            <span class="tag">一级分销</span>
+                            <span class="tag">高额提成</span>
+                        </div>
+                        <div class="card-links">
+                            <div class="founder">
+                                <img src="assets/PRCrecluse.jpg" alt="PRC隐士">
+                                <span class="founder-name">PRC隐士</span>
+                            </div>
+                            <div class="action-links">
+                                <a href="cooperation.html" class="action-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                                    </svg>
+                                    了解详情
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 职位描述模态框 -->
+    <div id="jobModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <p class="modal-description" id="modalDescription"></p>
+            <div class="modal-footer">
+                <a href="#" id="modalApplyButton" class="cta-button">申请职位</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // 导航交互
+    document.addEventListener('DOMContentLoaded', function() {
+        // 职位导航
+        const positionBtn = document.querySelector('a[href="#positions"]');
+        positionBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const positionsSection = document.getElementById('positions');
+            positionsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // 产品导航
+        const productBtn = document.querySelector('a[href="#products"]');
+        productBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const productsSection = document.getElementById('products');
+            productsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // 合作导航
+        const cooperationBtn = document.querySelector('a[href="#cooperation"]');
+        if (cooperationBtn) {
+            cooperationBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const cooperationSection = document.getElementById('cooperation');
+                cooperationSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+        
+        // 卡片悬停效果
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.08)';
+            });
+        });
+        
+        // 打字机效果
+        const typewriterElement = document.getElementById('typewriter');
+        const phrases = ["你是想卖一辈子糖水，还是加入我们改变世界？"];
+        let currentPhrase = 0;
+        let currentChar = 0;
+        let isDeleting = false;
+        let typingSpeed = 150;
+        
+        function type() {
+            const phrase = phrases[currentPhrase];
+            if (isDeleting) {
+                typewriterElement.textContent = phrase.substring(0, currentChar - 1);
+                currentChar--;
+            } else {
+                typewriterElement.textContent = phrase.substring(0, currentChar + 1);
+                currentChar++;
+            }
+            
+            if (!isDeleting && currentChar === phrase.length) {
+                isDeleting = true;
+                typingSpeed = 100;
+                setTimeout(type, 1500); // 暂停一段时间后再删除
+            } else if (isDeleting && currentChar === 0) {
+                isDeleting = false;
+                currentPhrase = (currentPhrase + 1) % phrases.length;
+                typingSpeed = 150;
+                setTimeout(type, 500); // 在切换到下一个短语前暂停一下
+            } else {
+                setTimeout(type, typingSpeed);
+            }
+        }
+        
+        // 开始打字效果
+        setTimeout(type, 1000);
+        
+        // 模态框功能
+        const modal = document.getElementById('jobModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalApplyButton = document.getElementById('modalApplyButton');
+        const modalClose = document.querySelector('.modal-close');
+        
+        // 职位描述数据
+        const jobDescriptions = {
+            '分销': '有人脉资源或相关经验优先，可以在杭州定期线下见面。',
+            '运营': '有自媒体运营经验（不是校级官号那种）优先，有执行力和审美优先，最好有数据分析能力。',
+            '开发': '我们可以提供开发过程指导、资金，但前提是你必须有足够执行力。'
+        };
+        
+        // 职位描述点击事件
+        const jobDescriptionLinks = document.querySelectorAll('.job-description');
+        jobDescriptionLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const jobType = this.getAttribute('data-job');
+                
+                modalTitle.textContent = jobType + '职位描述';
+                modalDescription.textContent = jobDescriptions[jobType];
+                modalApplyButton.href = `mailto:1765591779@qq.com?subject=应聘${jobType}职位&body=您好，我对贵公司的${jobType}职位很感兴趣，希望能加入贵公司。`;
+                
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+            });
+        });
+        
+        // 关闭模态框
+        modalClose.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // 恢复背景滚动
+        });
+        
+        // 点击模态框外部区域关闭
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    });
+    </script>
+</body>
+</html> 
